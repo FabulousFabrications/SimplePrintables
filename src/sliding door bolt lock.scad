@@ -1,9 +1,9 @@
 bolt_diameter = 8;
 bolt_length = 75;
-bolt_clearance = 0.5;
+bolt_clearance = 0.4;
 slider_length = 40;
 key_clearance = 0.05;
-thickness = 3.6;
+thickness = 4.2;
 screw_diameter = 3.6;
 part = 0;
 receiver_extra_height = 0;
@@ -25,6 +25,8 @@ zeroish = 0.001;
 key_offset = key_diameter + slider_length*(1-slider_length_scale)/2;
 explodify = 20;
 bolt_top_cutoff = 0.1;
+
+use <lib/hole.scad>;
 
 if (part == all || part == 1)
 	color("blue") explode(1) translate([bolt_offset+zeroish, 0, thickness+bolt_clearance/2])
@@ -85,11 +87,6 @@ module bolt_cutout(length, extra_height = 0) {
 	}
 }
 
-module cylinder_outer(h,d=undef,d1=undef,d2=undef,fn=15) {
-	fudge = cos(180/fn);
-	cylinder(h=h,d=d/fudge,d1=d1/fudge,d2=d2/fudge,$fn=fn);
-}
-
 module bevel(l, s) {
 	scale([-1, 1, 1])
 	rotate([0, -90, 0])
@@ -100,25 +97,15 @@ module bevel(l, s) {
 	}
 }
 
-module hole() {
-	translate([0, 0, 0.5]) {
-		countersink = 2;
-		height = thickness - countersink;
-		translate([0, 0, height+0.001]) cylinder_outer(d1=screw_diameter, d2=screw_diameter*2, h=countersink);
-		if (height > 0)
-			translate([0, 0, -2]) cylinder_outer(d=screw_diameter, h=height+2.1);
-	}
-}
-
 module hole_pair() {
-	translate([0, -(block_width/2-screw_diameter), 0]) hole();
-	translate([0, block_width/2-screw_diameter, 0]) hole();
+	translate([0, -(block_width/2-screw_diameter), 0]) hole(screw_diameter, thickness, 1.5, true);
+	translate([0, block_width/2-screw_diameter, 0]) hole(screw_diameter, thickness, 1.5, true);
 }
 
 module receiver() {
 	difference() {
 		bolt_cutout(receiver_length, receiver_extra_height);
-		translate([0, 0, -receiver_extra_height]) hole_pair();
+		translate([0, 0, thickness-receiver_extra_height]) hole_pair();
 	}
 }
 
@@ -126,9 +113,9 @@ module slider() {
 	difference() {
 		bolt_cutout(slider_length, slider_extra_height);
 		union() {
-			translate([slider_length/2-screw_diameter*2, 0, -slider_extra_height]) hole_pair();
-			translate([-(slider_length/2-screw_diameter*2), 0, -slider_extra_height]) hole_pair();
-			translate([0, 0, bolt_diameter+bolt_height]) cube([slider_length*slider_length_scale, bolt_diameter*2/3, bolt_diameter], center=true);
+			translate([slider_length/2-screw_diameter*2, 0, thickness-slider_extra_height]) hole_pair();
+			translate([-(slider_length/2-screw_diameter*2), 0, thickness-slider_extra_height]) hole_pair();
+			translate([0, 0, bolt_diameter+bolt_height]) cube([slider_length*slider_length_scale, bolt_diameter*2/3, bolt_diameter+thickness], center=true);
 		}
 	}
 }
