@@ -16,10 +16,6 @@ module retainer_inner(t, w, l) {
 	}
 }
 
-module nut_trap(w, h, sides){
-	cylinder(r = w / 2 / cos(180 / 6) + 0.05, h=h, $fn=6);
-}
-
 translate([0, 0, thickness]) difference() {
 	retainer_inner(h, width+thickness, l);
 	translate([0, 0, -0.001]) retainer_inner(h+0.002, width, l+0.002);

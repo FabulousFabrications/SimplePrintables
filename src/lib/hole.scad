@@ -14,3 +14,7 @@ module hole(d, height, countersink=0, extra_above=false) {
 			translate([0, 0, -2]) cylinder_outer(d=d, h=height+2.1);
 	}
 }
+
+module nut_trap(w, h, sides){
+	cylinder(r = w / 2 / cos(180 / 6) + 0.05, h=h, $fn=6);
+}

@@ -27,6 +27,7 @@ explodify = 20;
 bolt_top_cutoff = 0.1;
 
 use <lib/hole.scad>;
+use <lib/bevel.scad>;
 
 if (part == all || part == 1)
 	color("blue") explode(1) translate([bolt_offset+zeroish, 0, thickness+bolt_clearance/2])
@@ -84,16 +85,6 @@ module bolt_cutout(length, extra_height = 0) {
 		translate([-length/2, bolt_width_scale*-(bolt_diameter+t2)/2, thickness]) rotate([90, 0, 0]) bevel(length, 2);
 		translate([-length/2, bolt_width_scale*(bolt_diameter+t2)/2, thickness]) bevel(length, 2);
 		translate([0, 0, thickness/2]) cube([length, block_width, thickness], center=true);
-	}
-}
-
-module bevel(l, s) {
-	scale([-1, 1, 1])
-	rotate([0, -90, 0])
-	linear_extrude(l)
-	difference() {
-		square([s, s]);
-		translate([s, s]) circle(r=s, center=true);
 	}
 }
 
