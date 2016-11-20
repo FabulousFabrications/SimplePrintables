@@ -1,4 +1,4 @@
-use <lib/hole.scad>;
+use <../lib/hole.scad>;
 
 w = 20;
 h = 20;

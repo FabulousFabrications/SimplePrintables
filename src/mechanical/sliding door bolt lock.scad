@@ -26,8 +26,8 @@ key_offset = key_diameter + slider_length*(1-slider_length_scale)/2;
 explodify = 20;
 bolt_top_cutoff = 0.1;
 
-use <lib/hole.scad>;
-use <lib/bevel.scad>;
+use <../lib/hole.scad>;
+use <../lib/bevel.scad>;
 
 if (part == all || part == 1)
 	color("blue") explode(1) translate([bolt_offset+zeroish, 0, thickness+bolt_clearance/2])

@@ -1,4 +1,4 @@
-use <lib/hole.scad>;
+use <../lib/hole.scad>;
 
 module angle_bracket(a = 30, b = 30, h = 50, thickness = 3.6, d = 3, angle = 90) {
 	angle_bracket_side(a, h, thickness, d);

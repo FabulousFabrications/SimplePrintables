@@ -18,3 +18,12 @@ module hole(d, height, countersink=0, extra_above=false) {
 module nut_trap(w, h, sides){
 	cylinder(r = w / 2 / cos(180 / 6) + 0.05, h=h, $fn=6);
 }
+
+module rim(id, od, h) {
+	difference() {
+		cylinder_outer(h=h, d=od);
+		translate([0, 0, -1]) cylinder(h=h+2, d=id);
+	}
+}
+
+rim(8.5, 13, 2);

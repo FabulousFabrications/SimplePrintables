@@ -1,6 +1,6 @@
-use <lib/util.scad>;
-use <lib/hole.scad>;
-use <lib/bevel.scad>;
+use <../lib/util.scad>;
+use <../lib/hole.scad>;
+use <../lib/bevel.scad>;
 
 width = 32;
 length = 45;

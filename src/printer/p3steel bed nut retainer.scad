@@ -4,7 +4,7 @@ hole = 3;
 thickness = 4.8;
 height = thickness * 2.25;
 
-use <lib/hole.scad>;
+use <../lib/hole.scad>;
 
 h = height - thickness;
 l = length - width/2;

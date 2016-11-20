@@ -1,6 +1,6 @@
 //88.1 18.7 
 
-use <lib/util.scad>;
+use <../lib/util.scad>;
 
 thickness = 1.2;
 length = 88.1;

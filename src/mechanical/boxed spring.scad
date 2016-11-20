@@ -1,4 +1,4 @@
-use <lib/flat spring.scad>;
+use <../lib/flat spring.scad>;
 
 width = 20;
 height = 35;
