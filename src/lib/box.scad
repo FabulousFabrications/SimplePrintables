@@ -38,7 +38,7 @@ module holes(hole, d, thickness, size, fsize) {
 	}
 }
 
-module box_base(length, width, height, thickness, style="hole", hole=0, clearance = 0.1, hm=0, extend=50) {
+module box_base(length, width, height, thickness, style="hole", hole=0, clearance = 0.1, hm=0.9, extend=50) {
 	size = [length, width, height];
 	fsize = size+repeat(thickness*2, 3);
 	difference() {
@@ -63,7 +63,7 @@ module box_base(length, width, height, thickness, style="hole", hole=0, clearanc
 	}
 }
 
-module box_top(length, width, height, thickness, style="hole", hole=0, clearance = 0.1, hm=1, extend=50) {
+module box_top(length, width, height, thickness, style="hole", hole=0, clearance = 0.1, hm=0.1, extend=50) {
 	size = [length, width, height];
 	fsize = size+repeat(thickness*2, 3);
 	translate([0, 0, fsize[2]/2])
@@ -97,12 +97,12 @@ module box_snap(size, fsize, thickness, hm, top) {
 		translate([fsize[0]/2-0.001, fsize[1]/2 - width - thickness * 2, fsize[2] - l]) {
 			if (top) { cube([thickness*2, width, l]); }
 			else {
-				translate([-thickness/2+0.002, width/2, thickness*2 + catch_slant_height/2 -0.001]) rotate([0, 0, 180]) prism(width+ewidth, thickness, catch_slant_height);
+				translate([-thickness/2+0.002, width/2, thickness*2 + catch_slant_height/2 -0.001]) rotate([0, 0, 180]) prism(thickness, width+ewidth, catch_slant_height, center=true);
 			}
-			translate([-thickness/2+0.002, width/2, thickness]) rotate([180, 0, 180]) prism(width+ewidth, thickness, thickness * 2);
+			translate([-thickness/2+0.002, width/2, thickness]) rotate([180, 0, 180]) prism(thickness, width+ewidth, thickness * 2);
 		}
 	}
 }
 
-box_base(30, 20, 10, 4, 1);
-translate([0, 20*1.5, 0]) box_top(30, 20, 10, 4, 1);
+box_base(30, 20, 10, 1, "snap");
+translate([0, 20*1.5, 0]) box_top(30, 20, 10, 1, "snap");
