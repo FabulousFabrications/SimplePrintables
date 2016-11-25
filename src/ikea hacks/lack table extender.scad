@@ -16,19 +16,19 @@ translate([0, -extension, 0]) base_extension();
 rotate(90) base_extension();
 translate([-extension, -extension, 0]) cube([extension, extension, thickness]);
 
-translate([0, -thickness, h]) top_extension();
-translate([-thickness, 0, h]) scale([-1, 1, 1]) rotate(90) top_extension();
-translate([-thickness, -thickness, h]) cube([thickness, thickness, extension]);
+translate([0, -thickness, h+0.001]) top_extension();
+translate([-thickness, 0, h+0.001]) scale([-1, 1, 1]) rotate(90) top_extension();
+translate([-thickness, -thickness, h+0.001]) cube([thickness, thickness, extension]);
 
 module base_extension(b=false) {
 	difference() {
 		cube([d, extension, thickness]);
-		translate([d - extension, extension/2, thickness]) #hole(hole, thickness, 1);
-		translate([extension, extension/2, thickness]) #hole(hole, thickness, 0.5);
+		translate([d - extension, extension/2, thickness]) hole(hole, thickness, 1);
+		translate([extension, extension/2, thickness]) hole(hole, thickness, 0.5);
 	}
 	if(b) {
-		rotate([180, 0, 90]) prism(thickness, d, thickness, false);
-		rotate([180, 180, 90]) prism(thickness, d, thickness, false);
+		//rotate([180, 0, 90]) prism(thickness, d, thickness, false);
+		rotate([180, 180, 90]) prism(10, d, thickness, false);
 		//bevel(d, thickness);
 	}
 }
