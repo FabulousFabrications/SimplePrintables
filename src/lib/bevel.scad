@@ -3,7 +3,7 @@ module bevel(l, s, oe=0.1) {
 	rotate([0, -90, 0])
 	linear_extrude(l)
 	difference() {
-		translate([-oe, -oe]) square([s, s]);
+		translate([-oe, -oe]) square([s+oe, s+oe]);
 		translate([s, s]) circle(r=s, center=true);
 	}
 }
