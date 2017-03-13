@@ -68,7 +68,7 @@ union() {
     translate([0, 0, height_top]) difference() {
         union() {
             cylinder(d=d1+wall_thickness*2, h=wall_thickness);
-            translate([0, 0, -(hoseholderlength-wall_thickness)]) cylinder(d=dhosetop+wall_thickness, h=hoseholderlength);
+            translate([0, 0, -(hoseholderlength-wall_thickness)]) cylinder(d=dhosetop+wall_thickness*2, h=hoseholderlength);
         }
         translate([0, 0, -(0.5+(hoseholderlength-wall_thickness))]) cylinder(d=dhosetop, h=hoseholderlength+1);
     }
