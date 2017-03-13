@@ -3,13 +3,14 @@ use <../lib/cylinders.scad>;
 entry_diameter = 32;
 wall_thickness = 2.0;
 height_cone = 80;
-height_top = entry_diameter + 10;
+height_top = entry_diameter + 21;
 height_join = 10;
-hoseholderlength = 20;
-hoseholderside = 45;
+hoseholderlength = 55;
+hoseholderside = 48.5;
 hoseholdersideoffset = 10;
-dhosetop = 32;
-dhoseside = 32;
+dhosetop = 31.7;
+dhoseside = 37.9;
+dhoseexpansion = 0.8;
 dbase = 100;
 d1 = 120;
 d2 = 40;
@@ -55,29 +56,29 @@ union() {
 , dhoseside/2]) rotate([0, 270, 0]) cylinder(d=dhoseside+wall_thickness*2, h=hoseholdersideoffset+1);
         }
     }
-    translate([-hoseholdersideoffset, d1/2 - dhoseside/2, height_top-dhoseside/2]) {
+    translate([-hoseholdersideoffset, d1/2 - dhoseside/2, height_top-dhoseside/2-dhoseexpansion]) {
         rotate([0, 270, 0]) difference() {
             union() {
-                cylinder(d=dhoseside+wall_thickness*2, h=hoseholderside);
-                translate([(dhoseside+wall_thickness*2)/4, 0, hoseholderside/2]) cube([dhoseside/2+wall_thickness, dhoseside+wall_thickness*2, hoseholderside], center=true);
+                cylinder(d1=dhoseside+wall_thickness*2, d2=dhoseside+wall_thickness*2+dhoseexpansion, h=hoseholderside);
+                translate([(dhoseside+wall_thickness*2)/4, 0, hoseholderside/2]) cube([dhoseside/2+wall_thickness+dhoseexpansion*2, dhoseside+wall_thickness*2, hoseholderside], center=true);
             }
-            translate([0, 0, -0.5]) cylinder(d=dhoseside, h=hoseholderside+1);
+            translate([0, 0, -0.5]) cylinder(d1=dhoseside, d2=dhoseside+dhoseexpansion, h=hoseholderside+1);
         }
     }
     
     translate([0, 0, height_top]) difference() {
         union() {
             cylinder(d=d1+wall_thickness*2, h=wall_thickness);
-            translate([0, 0, -(hoseholderlength-wall_thickness)]) cylinder(d=dhosetop+wall_thickness*2, h=hoseholderlength);
+            translate([0, 0, -(hoseholderlength-wall_thickness)]) cylinder(d1=dhosetop+wall_thickness*2, d2=dhosetop+wall_thickness*2+dhoseexpansion, h=hoseholderlength);
         }
-        translate([0, 0, -(0.5+(hoseholderlength-wall_thickness))]) cylinder(d=dhosetop, h=hoseholderlength+1);
+        translate([0, 0, -(0.5+(hoseholderlength-wall_thickness))]) cylinder(d1=dhosetop, d2=dhosetop+dhoseexpansion, h=hoseholderlength+1);
     }
     difference() {
         cylinder(d=d1+wall_thickness*2, h=height_top);
         translate([0, 0, -0.5]) cylinder(d=d1, h=height_top+1);
-        translate([0, d1/2 - dhoseside/2, height_top-dhoseside/2]) {
+        translate([0, d1/2 - dhoseside/2, height_top-dhoseside/2-dhoseexpansion]) {
             rotate([0, 270, 0])
-                translate([0, 0, -0.5]) cylinder(d=dhoseside, h=hoseholderside+1+hoseholdersideoffset);
+                translate([0, 0, -0.5]) cylinder(d1=dhoseside, d2=dhoseside+dhoseexpansion, h=hoseholderside+1+hoseholdersideoffset);
         }
     }
 }
