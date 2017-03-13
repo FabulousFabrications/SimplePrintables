@@ -7,7 +7,7 @@ thickness = 4.2;
 screw_diameter = 3.6;
 part = 0;
 receiver_extra_height = 0;
-slider_extra_height = 11;
+slider_extra_height = 0;
 
 $fn = 25;
 bolt_width_scale = 0.75;
@@ -106,7 +106,7 @@ module slider() {
 		union() {
 			translate([slider_length/2-screw_diameter*2, 0, thickness-slider_extra_height]) hole_pair();
 			translate([-(slider_length/2-screw_diameter*2), 0, thickness-slider_extra_height]) hole_pair();
-			translate([0, 0, bolt_diameter+bolt_height]) cube([slider_length*slider_length_scale, bolt_diameter*2/3, bolt_diameter+thickness], center=true);
+			//translate([0, 0, bolt_diameter+bolt_height]) cube([slider_length*slider_length_scale, bolt_diameter*2/3, bolt_diameter+thickness], center=true);
 		}
 	}
 }

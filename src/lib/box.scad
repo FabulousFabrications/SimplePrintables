@@ -5,8 +5,10 @@ use <../lib/shapes.scad>;
 
 $fn = 30;
 
+function hole_sizing(hole, thickness) = hole+thickness*2;
+
 module case_shell(size, fsize, hole, thickness, clearance, style) {
-	c = hole*2;
+	c = hole_sizing(hole, thickness);
 	difference() {
 		union() {
 			difference() {
@@ -29,9 +31,9 @@ module case_shell(size, fsize, hole, thickness, clearance, style) {
 }
 
 module holes(hole, d, thickness, size, fsize) {
-	c = hole/2+thickness*2;
+	c = hole_sizing(hole, thickness)/2;
 	for (r = [0 : 180 : 180]) {
-		rotate([0, 180, r]) translate([fsize[0]/2, 0, fsize[2]/2]) {
+		rotate([0, 0, r]) translate([fsize[0]/2, 0, fsize[2]/2]) {
 			translate([- c, fsize[1]/2-c, 0]) hole(d, size[2]+0.01, 1, true);
 			translate([- c, -(fsize[1]/2-c), 0]) hole(d, size[2]+0.01, 1, true);
 		}
@@ -39,7 +41,8 @@ module holes(hole, d, thickness, size, fsize) {
 }
 
 module box_base(length, width, height, thickness, style="hole", hole=0, clearance = 0.1, hm=0.9, extend=50) {
-	size = [length, width, height];
+	extend = style == "hole" ? hole_sizing(hole, thickness)*2 : 0;
+	size = [length + extend, width + extend, height];
 	fsize = size+repeat(thickness*2, 3);
 	difference() {
 		translate([0, 0, fsize[2]/2])
@@ -64,7 +67,8 @@ module box_base(length, width, height, thickness, style="hole", hole=0, clearanc
 }
 
 module box_top(length, width, height, thickness, style="hole", hole=0, clearance = 0.1, hm=0.1, extend=50) {
-	size = [length, width, height];
+	extend = style == "hole" ? hole_sizing(hole, thickness)*2 : 0;
+	size = [length + extend, width + extend, height];
 	fsize = size+repeat(thickness*2, 3);
 	translate([0, 0, fsize[2]/2])
 	difference() {
@@ -78,7 +82,7 @@ module box_top(length, width, height, thickness, style="hole", hole=0, clearance
 		translate([0, 0, -cutoff[2]/2+fsize[2]/2-thickness-hm*height+0.001]) cube(cutoff, center=true);
 		
 		if (style == "hole") {
-			translate([0, 0, -thickness]) holes(hole, hole + clearance, thickness, size, fsize);
+			translate([0, 0, 0]) holes(hole, hole + clearance, thickness, size, fsize);
 		}
 	}
 	if (style == "snap") {
