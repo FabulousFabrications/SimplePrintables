@@ -1,5 +1,5 @@
-phone_l = 20;
-phone_w = 78.5;
+phone_l = 30;
+phone_w = 78;
 phone_t = 15;
 
 through_bolt_d = 5;
@@ -34,16 +34,18 @@ translate([-wall_t-b_d, -(through_bolt_l - phone_l)/2, 0]) {
 }
 
 translate([-100, 0, 0]) {
+    extra_d = tripod_block_d - b_h;
+    tripod_block_d = b_h;
     difference() {
-        cube([tripod_block_d, tripod_block_d, tripod_bolt_d]);
+        cube([tripod_block_d, tripod_block_d+extra_d, tripod_bolt_d]);
         translate([tripod_block_d/2, tripod_block_d/2, -0.5]) cylinder(d=tripod_bolt_d,h=tripod_bolt_d+1);
     }
-    translate([0, tripod_block_d, 0]) {
+    translate([0, tripod_block_d+extra_d, 0]) {
         cube([tripod_block_d, ib_l, tripod_bolt_d]);
         
         translate([tripod_block_d/2-b_h/2, 0, tripod_bolt_d]) {
-            cube([b_h, ib_l, b_d]); 
-            translate([b_h/2, b_d, b_d]) rotate([90, 0, 0]) cylinder(d=b_h,h=b_d);
+            cube([b_h, ib_l, b_d*2]); 
+            translate([b_h/2, b_d, b_d*2]) rotate([90, 0, 0]) cylinder(d=b_h,h=b_d);
         }
     }
     
