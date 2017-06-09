@@ -2,48 +2,44 @@ use <../lib/cylinders.scad>;
 
 entry_diameter = 32;
 wall_thickness = 2.0;
-height_cone = 80;
-height_top = entry_diameter + 21;
+height_cone = 125;
+height_top = entry_diameter + 31;
 height_join = 10;
-hoseholderlength = 55;
-hoseholderside = 48.5;
+hoseholderlength = 65;
+hoseholderside = 65;
 hoseholdersideoffset = 10;
 dhosetop = 31.7;
 dhoseside = 37.9;
-dhoseexpansion = 0.8;
-dbase = 100;
-d1 = 120;
-d2 = 40;
+dhoseexpansion = 1.05;
+holderexpansion = 0.04;
+dbase = 145;
+d1 = 160;
+d2 = 45;
 
 $fn=50;
 
-
-translate([0, 0, height_cone]) {
-    difference() {
-        cylinder(d=d1+wall_thickness*2, h=wall_thickness*2);
-        translate([0, 0, -0.5]) cylinder(d=d1, h=wall_thickness*2+1);
-    }
-    difference() {
-        cylinder(d=d1+wall_thickness*4, h=wall_thickness*2+height_join);
-        translate([0, 0, -0.5]) cylinder(d=d1+wall_thickness*2, h=wall_thickness*2+1+height_join);
-    }
+union() {
+translate([0, 0, height_cone-0.5]) {
+    cylinder_wall(d1, d1, wall_thickness*2, wall_thickness*1.5);
+    translate([0, 0, wall_thickness*2]) cylinder_wall(d1+wall_thickness*2+holderexpansion, d1+wall_thickness*2+holderexpansion, wall_thickness*2+height_join+0.5, wall_thickness);
 }
-cylinder_with_horizontal_thickness(d2, d1, height_cone, wall_thickness);
+cylinder_wall(d2, d1, height_cone, wall_thickness);
 difference() {
     union() {
         cylinder(d=dbase, h=wall_thickness);
         difference() {
             for (a = [0:90:270]) {
                 //rotate(45+a) translate([-2.5, d2/2+15, 0]) cube([5, 5, 40]);
-                rotate(45+a) translate([0, dbase/2 - 8, 0]) cylinder(d=8, h=50, $fn=15);
+                rotate(45+a) translate([0, dbase/2 - 10, 0]) cylinder(d=8, h=height_cone - 10, $fn=15);
             }
             cylinder(d2=d1, d1=d2, h=height_cone);
         }
     }
     translate([0, 0, -0.5])cylinder(d=d2+wall_thickness, h=wall_thickness+1);
     for (a = [0:90:270]) {
-        rotate(a) translate([0, dbase/2 - 10, -0.5]) cylinder(d=4, h=wall_thickness+1, $fn=15);
+        rotate(a) translate([0, dbase/2 - 6, -0.5]) cylinder(d=4, h=wall_thickness+1, $fn=15);
     }
+}
 }
 
 translate([0, d1*1.5, 0])

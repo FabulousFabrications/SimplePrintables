@@ -2,10 +2,10 @@ use <../lib/util.scad>;
 use <../lib/hole.scad>;
 use <../lib/bevel.scad>;
 
-width = 34;
-length = 45;
-height = 20;
-thickness = 0.6 * 4;
+width = 80;
+length = 80;
+height = 25;
+thickness = 0.5 * 6;
 hole = 3;
 clearance = 0.1;
 $fn = 25;
@@ -40,10 +40,16 @@ module holes(d) {
 	c = hole * 3.5;
 	for (r = [0 : 180 : 180]) {
 		rotate([0, 180, r]) translate([length/2+thickness, 0, height/2 + thickness]) {
-			translate([-thickness-hole-c*2/3, -7, 0]) hole(d, height+0.01, 1, true);
-			translate([-thickness-hole-c*2/3, 7, 0]) hole(d, height+0.01, 1, true);
+			translate([-thickness-hole-c/2, -7, 0]) hole(d, height+0.01, 1, true);
+			translate([-thickness-hole-c/2, 7, 0]) hole(d, height+0.01, 1, true);
 			translate([- c/2, width/2+thickness-c/2, 0]) hole(d, height+0.01, 1, true);
 			translate([- c/2, -width/2-thickness+c/2, 0]) hole(d, height+0.01, 1, true);
+		}
+	}
+	for (r = [0 : 180 : 180]) {
+		rotate([0, 180, 90+r]) translate([width/2+thickness, 0, height/2 + thickness]) {
+			translate([-thickness-hole*2, -7, 0]) hole(d, height+0.01, 1, true);
+			translate([-thickness-hole*2, 7, 0]) hole(d, height+0.01, 1, true);
 		}
 	}
 }
@@ -66,6 +72,11 @@ module top() {
 				translate([-thickness-0.001, 0, 0]) rotate([0, 90, 0]) cylinder(d=10, h=thickness+0.002);
 			}
 		}
+		for (r = [0 : 180 : 180]) {
+			rotate([0, 180, 90+r]) translate([width/2+thickness, 0, height/2]) {
+				translate([-thickness-0.001, 0, 0]) rotate([0, 90, 0]) cylinder(d=10, h=thickness+0.002);
+			}
+		}
 	}
 }
 
@@ -79,5 +90,6 @@ module flex_grabber() {
 
 base();
 translate([0, width*1.5, 0]) top();
-translate([0, width*2.5, 0])flex_grabber();
-translate([0, width*2.5+10, 0])flex_grabber();
+for( i = [0:3]) {
+    translate([0, width*2.5+10*i, 0])flex_grabber();
+}
