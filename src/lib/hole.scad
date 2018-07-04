@@ -15,8 +15,8 @@ module hole(d, height, countersink=0, extra_above=false) {
 	}
 }
 
-module nut_trap(w, h, sides){
-	cylinder(r = w / 2 / cos(180 / 6) + 0.05, h=h, $fn=6);
+module nut_trap(w, h, sides, center=false){
+	cylinder(r = w / 2 / cos(180 / 6) + 0.05, h=h, $fn=6, center=center);
 }
 
 module rim(id, od, h) {
